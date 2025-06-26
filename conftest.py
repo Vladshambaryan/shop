@@ -8,7 +8,7 @@ from playwright.sync_api import sync_playwright
 def browser():
     with sync_playwright() as p:
         browser = p.chromium.launch(
-            headless=False,
+            headless=True,
             slow_mo=1 # Можно настроить скорость
         )
         yield browser
