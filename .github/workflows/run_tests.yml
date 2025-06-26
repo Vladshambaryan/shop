@@ -1,4 +1,3 @@
-
 name: Python autotests
 
 on:
@@ -11,6 +10,10 @@ on:
         default: smoke
         options:
           - all
+          - smoke
+          - regression
+          - extended
+          
           
 permissions:
   contents: read
@@ -21,18 +24,15 @@ jobs:
   run-tests:
     runs-on: ubuntu-latest
     name: Run autotests
-    steps: 
+    steps:
       - name: Checkout autotests
         uses: actions/checkout@v4
       - name: Set up Python environment
         uses: actions/setup-python@v5
         with:
-         python-version: '3.10'
+          python-version: '3.10'
       - name: Install dependencies.
-        run: pip install -r requirements.txt  
-
-      - name: Install Playwright
-        run: playwright install   
+        run: pip install -r requirements.txt
         
       - name: run all tests
         if: "github.event.inputs.deployment_target == 'all'"
@@ -63,7 +63,7 @@ jobs:
       - name: Install Allure
         run: sudo wget https://github.com/allure-framework/allure2/releases/download/2.30.0/allure-2.30.0.tgz && sudo tar -zxvf allure-2.30.0.tgz -C /opt/ && sudo ln -s /opt/allure-2.30.0/bin/allure /usr/bin/allure
       - name: Generate report
-        run: allure generate -c negative_test_koshelek/allure-results -o _site
+        run: allure generate -c allure-results -o _site
         
       - name: Save allure report
         uses: actions/upload-artifact@v4
@@ -84,5 +84,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        
-  
