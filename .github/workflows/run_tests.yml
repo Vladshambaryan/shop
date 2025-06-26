@@ -33,6 +33,9 @@ jobs:
           python-version: '3.10'
       - name: Install dependencies.
         run: pip install -r requirements.txt
+
+      - name: Install Playwright
+        run: playwright install   
         
       - name: run all tests
         if: "github.event.inputs.deployment_target == 'all'"
@@ -84,3 +87,5 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        
+  
